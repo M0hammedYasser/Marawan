@@ -3,6 +3,7 @@ package com.spring.model.mapper;
 import com.spring.model.dto.*;
 import com.spring.model.entity.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
@@ -16,6 +17,7 @@ public interface EntityDtoMapper {
 
     CourseDto courseToCourseDto(Course course);
 
+    @Mapping(source = "instructorId" , target = "instructor.userId")
     Course courseDtoToCourse(CourseDto courseDto);
 
     LessonDto lessonToLessonDto(Lesson lesson);
