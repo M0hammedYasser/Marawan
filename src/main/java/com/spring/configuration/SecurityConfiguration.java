@@ -38,9 +38,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/api/users/**").hasRole("ADMIN")
-                        .requestMatchers("/api/courses/**").hasRole("INSTRUCTOR")
-                        .requestMatchers("/api/enrollments/**").hasRole("STUDENT")
+//                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/courses/**").hasRole("INSTRUCTOR")
+//                        .requestMatchers("/api/enrollments/**").hasRole("STUDENT")
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
