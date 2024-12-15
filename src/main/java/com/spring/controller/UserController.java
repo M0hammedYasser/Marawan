@@ -25,12 +25,12 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+        return userService.findAll();
     }
 
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
-        return userService.createUser(userDto);
+        return userService.insert(userDto);
     }
 
     @PutMapping("/{userId}")

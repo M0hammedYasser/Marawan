@@ -5,6 +5,7 @@ import com.spring.model.entity.User;
 import com.spring.model.mapper.EntityDtoMapper;
 import com.spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final EntityDtoMapper entityDtoMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, EntityDtoMapper entityDtoMapper) {
+    public UserService(UserRepository userRepository, EntityDtoMapper entityDtoMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.entityDtoMapper = entityDtoMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDto getUserById(int userId) {
@@ -28,13 +31,14 @@ public class UserService {
         return entityDtoMapper.userToUserDto(user);
     }
 
-    public List<UserDto> getAllUsers() {
+    public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map(entityDtoMapper::userToUserDto).toList();
     }
 
-    public UserDto createUser(UserDto userDto) {
+    public UserDto insert(UserDto userDto) {
         User user = entityDtoMapper.userDtoToUser(userDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return entityDtoMapper.userToUserDto(user);
     }
