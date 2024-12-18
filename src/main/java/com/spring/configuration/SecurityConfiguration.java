@@ -24,11 +24,15 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final AppUserDetailsService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfiguration(AppUserDetailsService userService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.userService = userService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,9 +42,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
-//                        .requestMatchers("/api/users/**").hasRole("ADMIN")
-//                        .requestMatchers("/api/courses/**").hasRole("INSTRUCTOR")
-//                        .requestMatchers("/api/enrollments/**").hasRole("STUDENT")
+                        .requestMatchers("/api/users/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/api/courses/**").hasAuthority("ROLE_INSTRUCTOR")
+                        .requestMatchers("/api/enrollments/**").hasAuthority("ROLE_STUDENT")
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
