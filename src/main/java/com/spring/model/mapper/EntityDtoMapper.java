@@ -15,6 +15,7 @@ public interface EntityDtoMapper {
 
     User userDtoToUser(UserDto userDto);
 
+    @Mapping(target = "instructorId" , source = "instructor.userId")
     CourseDto courseToCourseDto(Course course);
 
     @Mapping(source = "instructorId" , target = "instructor.userId")
@@ -24,8 +25,12 @@ public interface EntityDtoMapper {
 
     Lesson lessonDtoToLesson(LessonDto lessonDto);
 
+    @Mapping(target = "courseId" , source = "course.courseId")
+    @Mapping(target = "studentId" , source = "student.userId")
     EnrollmentDto enrollmentToEnrollmentDto(Enrollment enrollment);
 
+    @Mapping(source = "courseId" , target = "course.courseId")
+    @Mapping(source = "studentId" , target = "student.userId")
     Enrollment enrollmentDtoToEnrollment(EnrollmentDto enrollmentDto);
 
     AssessmentDto assessmentToAssessmentDto(Assessment assessment);
