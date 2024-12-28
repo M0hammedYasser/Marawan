@@ -21,10 +21,10 @@ public interface EntityDtoMapper {
     @Mapping(source = "instructorId" , target = "instructor.userId")
     Course courseDtoToCourse(CourseDto courseDto);
 
-    @Mapping(source = "course.id" , target = "courseId")
+    @Mapping(source = "course.courseId" , target = "courseId")
     LessonDto lessonToLessonDto(Lesson lesson);
 
-    @Mapping(target = "course.id" , source = "courseId")
+    @Mapping(target = "course.courseId" , source = "courseId")
     Lesson lessonDtoToLesson(LessonDto lessonDto);
 
     @Mapping(target = "courseId" , source = "course.courseId")
@@ -42,7 +42,7 @@ public interface EntityDtoMapper {
     Assessment assessmentDtoToAssessment(AssessmentDto assessmentDto);
 
     @Mapping(source ="assessment.assessmentId" , target ="assessmentId" )
-    @Mapping(source ="student.id" , target ="studentId" )
+    @Mapping(source ="student.userId" , target ="studentId" )
     GradeDto gradeToGradeDto(Grade grade);
 
     @Mapping(target ="assessment.assessmentId" , source ="assessmentId" )
